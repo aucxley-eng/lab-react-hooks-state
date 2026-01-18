@@ -7,12 +7,12 @@ import DarkModeToggle from './components/DarkModeToggle';
 export const Products = [
   { id: 1, name: 'Laptop', price: 999, category: 'Electronics', image: 'https://images.pexels.com/photos/7670738/pexels-photo-7670738.jpeg' },
   { id: 2, name: 'Headphones', price: 199, category: 'Electronics', image: 'https://images.pexels.com/photos/14935011/pexels-photo-14935011.jpeg' },
-  { id: 3, name: 'T-Shirt', price: 29, category: 'Clothing', image: '/images/tshirt.png' },
-  { id: 4, name: 'Jeans', price: 79, category: 'Clothing', image: '/images/jeans.png' },
-  { id: 5, name: 'Coffee Maker', price: 149, category: 'Home', image: '/images/coffeemaker.png' },
-  { id: 6, name: 'Blender', price: 89, category: 'Home', image: '/images/blender.png' },
-  { id: 7, name: 'Apple', price: 2, category: 'Fruits', image: '/images/apple.png' },
-  { id: 8, name: 'Milk', price: 3, category: 'Home', image: '/images/milk.png' }
+  { id: 3, name: 'T-Shirt', price: 29, category: 'Clothing', image: 'https://images.pexels.com/photos/2451200/pexels-photo-2451200.jpeg' },
+  { id: 4, name: 'Jeans', price: 79, category: 'Clothing', image: 'https://images.pexels.com/photos/24513229/pexels-photo-24513229.jpeg' },
+  { id: 5, name: 'Coffee Maker', price: 149, category: 'Home', image: 'https://images.pexels.com/photos/6032799/pexels-photo-6032799.jpeg' },
+  { id: 6, name: 'Blender', price: 89, category: 'Home', image: 'https://images.pexels.com/photos/16969212/pexels-photo-16969212.jpeg' },
+  { id: 7, name: 'Apple', price: 2, category: 'Fruits', image: 'https://images.pexels.com/photos/102104/pexels-photo-102104.jpeg' },
+  { id: 8, name: 'Milk', price: 3, category: 'Home', image: 'https://images.pexels.com/photos/30731012/pexels-photo-30731012.jpeg' }
 ];
 
 function App() {
