@@ -1,38 +1,99 @@
-import React, { useState } from 'react'
-import ProductList from './components/ProductList'
-import DarkModeToggle from './components/DarkModeToggle'
-import Cart from './components/Cart'
+import React, { useState, useEffect } from 'react';
+import ProductList from './components/ProductList';
+import Cart from './components/Cart';
+import DarkModeToggle from './components/DarkModeToggle';
 
-const App = () => {
-  // TODO: Implement state for dark mode toggle
+// ✅ Exported so tests can access it
+export const Products = [
+  { id: 1, name: 'Laptop', price: 999, category: 'Electronics', image: 'https://images.pexels.com/photos/7670738/pexels-photo-7670738.jpeg' },
+  { id: 2, name: 'Headphones', price: 199, category: 'Electronics', image: 'https://images.pexels.com/photos/14935011/pexels-photo-14935011.jpeg' },
+  { id: 3, name: 'T-Shirt', price: 29, category: 'Clothing', image: '/images/tshirt.png' },
+  { id: 4, name: 'Jeans', price: 79, category: 'Clothing', image: '/images/jeans.png' },
+  { id: 5, name: 'Coffee Maker', price: 149, category: 'Home', image: '/images/coffeemaker.png' },
+  { id: 6, name: 'Blender', price: 89, category: 'Home', image: '/images/blender.png' },
+  { id: 7, name: 'Apple', price: 2, category: 'Fruits', image: '/images/apple.png' },
+  { id: 8, name: 'Milk', price: 3, category: 'Home', image: '/images/milk.png' }
+];
 
-  // TODO: Implement state for cart management
+function App() {
+  const [darkMode, setDarkMode] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
-  // TODO: Implement state for category filtering
+  // ✅ Use Products instead of sampleProducts
+  const categories = ['All', ...new Set(Products.map(product => product.category))];
+
+  const filteredProducts = selectedCategory === 'All' 
+    ? Products 
+    : Products.filter(product => product.category === selectedCategory);
+
+  const addToCart = (product) => {
+    const existingItem = cartItems.find(item => item.id === product.id);
+    if (existingItem) {
+      setCartItems(cartItems.map(item => 
+        item.id === product.id 
+          ? { ...item, quantity: item.quantity + 1 } 
+          : item
+      ));
+    } else {
+      setCartItems([...cartItems, { ...product, quantity: 1 }]);
+    }
+  };
+
+  const removeFromCart = (id) => {
+    setCartItems(cartItems.filter(item => item.id !== id));
+  };
+
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity, 
+    0
+  );
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }, [darkMode]);
 
   return (
-    <div>
-      <h1>🛒 Shopping App</h1>
-      <p>
-        Welcome! Your task is to implement filtering, cart management, and dark
-        mode.
-      </p>
+    <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
+      <header className="app-header">
+        <h1>Shopping App</h1>
+        <div className="header-controls">
+          <select 
+            value={selectedCategory} 
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="category-filter"
+          >
+            {categories.map(category => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
 
-      {/* TODO: Render DarkModeToggle and implement dark mode functionality */}
-
-      {/* TODO: Implement category filter dropdown */}
-      <label>Filter by Category: </label>
-      <select>
-        <option value="all">All</option>
-        <option value="Fruits">Fruits</option>
-        <option value="Dairy">Dairy</option>
-      </select>
-
-      <ProductList />
-
-      {/* TODO: Implement and render Cart component */}
+          <DarkModeToggle 
+            darkMode={darkMode} 
+            setDarkMode={setDarkMode} 
+          />
+        </div>
+      </header>
+      
+      <main className="app-main">
+        <ProductList 
+          products={filteredProducts} 
+          addToCart={addToCart} 
+        />
+        <Cart 
+          cartItems={cartItems} 
+          removeFromCart={removeFromCart}
+          totalPrice={totalPrice}
+        />
+      </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

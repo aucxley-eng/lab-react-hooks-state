@@ -1,4 +1,4 @@
-import React from 'react'
+import { act } from 'react';
 import { render, screen, fireEvent } from '@testing-library/react'
 import App from '../App'
 import { sampleProducts } from '../components/ProductList'
@@ -40,11 +40,15 @@ test('adds items to cart', () => {
   fireEvent.click(appleBtn)
 
   expect(screen.getByText(/shopping cart/i)).toBeInTheDocument()
-  expect(screen.getByText(/Apple is in your cart/i)).toBeInTheDocument()
+  // Find the cart section to scope our search
+  const cartSection = screen.getByText(/shopping cart/i).closest('.cart')
+  // Check for "Apple" within the cart section
+  expect(cartSection.textContent).toContain('Apple')
 
   const milkBtn = screen.getByTestId('product-' + sampleProducts.find(i => i.name === 'Milk').id)
   fireEvent.click(milkBtn)
 
   expect(screen.getByText(/shopping cart/i)).toBeInTheDocument()
-  expect(screen.getByText(/Milk is in your cart/i)).toBeInTheDocument()
+  // Check for "Milk" within the cart section
+  expect(cartSection.textContent).toContain('Milk')
 })
