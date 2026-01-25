@@ -1,4 +1,4 @@
-import { act } from 'react';
+import { act } from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import App from '../App'
 import { sampleProducts } from '../components/ProductList'
